@@ -1,11 +1,13 @@
 package main
 
 import (
-    "log"
-    "os"
-    "strings"
-    "github.com/gin-gonic/gin"
-    "github.com/xnemect1/surgeon-webapi/api"
+	"log"
+	"os"
+	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/xnemect1/surgeon-webapi/api"
+	"github.com/xnemect1/surgeon-webapi/internal/surgeon_wl"
 )
 
 func main() {
@@ -21,6 +23,7 @@ func main() {
     engine := gin.New()
     engine.Use(gin.Recovery())
     // request routings
+    surgeon_wl.AddRoutes(engine)
     engine.GET("/openapi", api.HandleOpenApi)
     engine.Run(":" + port)
 }

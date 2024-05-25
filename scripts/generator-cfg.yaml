@@ -1,0 +1,8 @@
+generatorName: go-gin-server
+templateDir: /local/scripts/templates
+outputDir: /local
+inputSpec: /local/api/surgeon-wl.openapi.yaml
+enablePostProcessFile: true
+additionalProperties:
+  apiPath: internal/surgeon_wl
+  packageName: surgeon_wl

@@ -1,0 +1,6 @@
+internal/surgeon_wl/README.md
+internal/surgeon_wl/api_surgeries_list.go
+internal/surgeon_wl/api_surgery_operated_limb.go
+internal/surgeon_wl/model_operated_limb.go
+internal/surgeon_wl/model_surgery_entry.go
+internal/surgeon_wl/routers.go
