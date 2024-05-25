@@ -1,0 +1,319 @@
+openapi: 3.0.0
+servers:
+  - description: Cluster Endpoint
+    url: /api
+info:
+  description: Surgeons List for Web-In-Cloud system
+  version: '1.0.0'
+  title: Waiting List Api
+  contact:
+    email: tomas.nemec1999@gmail.com
+  license:
+    name: CC BY 4.0
+    url: 'https://creativecommons.org/licenses/by/4.0/'
+tags:
+  - name: surgeriesList
+    description: Surgeries List API
+  - name: oepratedLimbs
+    description: specific locations that can be operated
+paths:
+  '/surgeries-list/{surgeonId}/entries':
+    get:
+      tags:
+        - surgeriesList
+      summary: Provides surgeries of surgeon
+      operationId: getSurgeryEntries
+      description: By using surgeonId you get list of surgeries performed by surgeon
+      parameters:
+        - in: path
+          name: surgeonId
+          description: pass the id of the particular surgeon
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: value of the surgeries list entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurgeryEntry'
+              examples:
+                response:
+                  $ref: '#/components/examples/SurgeryEntriesExample'
+        '404':
+          description: Surgeon with such ID does not exist
+    post:
+      tags:
+        - surgeriesList
+      summary: Saves new entry into surgeries list
+      operationId: createSurgeryEntry
+      description: Use this method to store new entry into the surgeries list.
+      parameters:
+        - in: path
+          name: surgeonId
+          description: pass the id of the particular surgeon
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurgeryEntry'
+            examples:
+              request-sample:
+                $ref: '#/components/examples/SurgeryEntriesExample'
+        description: Surgery entry to store
+        required: true
+      responses:
+        '200':
+          description: >-
+            Value of the surgery entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurgeryEntry'
+              examples:
+                updated-response:
+                  $ref: '#/components/examples/SurgeryEntriesExample'
+        '400':
+          description: Missing mandatory properties of input object.
+        '404':
+          description: Surgeon with such ID does not exists
+        '409':
+          description: Entry with the specified id already exists
+  '/surgeries-list/{surgeonId}/entries/{entryId}':
+    get:
+      tags:
+        - surgeriesList
+      summary: Provides details about waiting list entry
+      operationId: getSurgeryEntry
+      description: >-
+        By using surgeonId and entryId you can details of particular entry
+        item surgery.
+      parameters:
+        - in: path
+          name: surgeonId
+          description: pass the id of the particular surgery
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: entryId
+          description: pass the id of the particular entry in the waiting list
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: value of the surgery list entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurgeryEntry'
+              examples:
+                response:
+                  $ref: '#/components/examples/SurgeryEntryExample'
+        '404':
+          description: Surgeon or Entry with such ID does not exists
+    put:
+      tags:
+        - surgeriesList
+      summary: Updates specific entry
+      operationId: updateSurgeryEntry
+      description: Use this method to update content of the waiting list entry.
+      parameters:
+        - in: path
+          name: surgeonId
+          description: pass the id of the particular surgeon
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: entryId
+          description: pass the id of the particular entry in the s list
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurgeryEntry'
+            examples:
+              request:
+                $ref: '#/components/examples/SurgeryEntryExample'
+        description: Waiting list entry to update
+        required: true
+      responses:
+        '200':
+          description: >-
+            value of the surgeries list entry with re-computed estimated time of
+            surgeon entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurgeryEntry'
+              examples:
+                response:
+                  $ref: '#/components/examples/SurgeryEntryExample'
+        '403':
+          description: >-
+            Value of the entryID and the data id is mismatching. Details are
+            provided in the response body.
+        '404':
+          description: Surgeon or Entry with such ID does not exists
+    delete:
+      tags:
+        - surgeriesList
+      summary: Deletes specific entry
+      operationId: deleteSurgeryEntry
+      description: Use this method to delete the specific entry from the surgeries list.
+      parameters:
+        - in: path
+          name: surgeonId
+          description: pass the id of the particular surgery
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: entryId
+          description: pass the id of the particular entry in the waiting list
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Item deleted
+        '404':
+          description: Surgeon or Entry with such ID does not exists
+  '/surgeries-list/operatedLimbList':
+    get:
+      tags:
+        - surgeryOperatedLimb
+      summary: Provides the list of operated limbs associated with surgeries
+      operationId: getOperatedLimbList
+      description: Get a list of predefined operated limbs applicable to surgeries
+      responses:
+        '200':
+          description: value of the predefined operated limbs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OperatedLimb'
+              examples:
+                response:
+                  $ref: '#/components/examples/OperatedLimbsListExample'
+components:
+  schemas:
+    SurgeryEntry:
+      type: object
+      required: [id, surgeonId, patientId, date, successful, operatedLimb]
+      properties:
+        id:
+          type: string
+          example: x321ab3
+          description: Unique id of the entry in this surgeries list
+        surgeonId:
+          type: string
+          example: 460527-Jano-Vrba
+          description: Unique identifier of the surgeon known to Web-In-Cloud system
+        patientId:
+          type: string
+          example: 460527-jozef-pucik
+          description: Unique identifier of the patient known to Web-In-Cloud system
+        date:
+          type: string
+          example: 24-05-2024
+        successful:
+          type: boolean
+          example: True
+        surgeryNote:
+          type: string
+          example: Surgery was successful without any complication
+        operatedLimb:
+          $ref: '#/components/schemas/OperatedLimb'
+      example:
+        $ref: '#/components/examples/SurgeryEntryExample'
+    OperatedLimb:
+      description: 'Location on body that was operated'
+      required:
+        - value
+      properties:
+        value:
+          type: string
+          example: Lava ruka
+        code:
+          type: string
+          example: Left hand
+      example:
+        $ref: '#/components/examples/OperatedLimbExample'
+  examples:
+    SurgeryEntryExample:
+      summary: Ľudomír Zlostný waiting
+      description: |
+        Entry represents a patient waiting in the ambulance prep room with
+        defined symptoms
+      value:
+        id: x321ab3
+        patientId: 74895-ludomir-zlostny
+        date: 2024-05-24
+        successful: True
+        surgeryNote: Vsetko prebehlo podla planu
+        operatedLimb:
+          value: Lava ruka
+          code: Left hand
+    OperatedLimbExample:
+      summary: Sample of operated limbs
+      description: |
+        Example list of possible oeprated limbs
+      value:
+        - value: Lava ruka
+          code: Left hand
+    SurgeryEntriesExample:
+      summary: List of surgeries performed by surgeon
+      description: |
+        Example of two surgeries
+      value:
+        - id: x321ab3
+          surgeonId: 76554-Jano-Vrba
+          patientId: 74895-ludomir-zlostny
+          date: 2024-05-24
+          successful: True
+          surgeryDetail:
+          surgeryNote: Vsetko prebehlo podla planu
+          operatedLimb:
+            value: Lava ruka
+            code: Left hand
+        - id: x456cd3
+          surgeonId: 76554-Jano-Vrba
+          patientId: 74895-vaclav-gyorgi
+          date: 2024-05-11
+          successful: False
+          surgeryDetail:
+          surgeryNote: Stratil 4 prsty na nohe
+          operatedLimb:
+            value: Prava noha
+            code: Right leg
+    OperatedLimbsListExample:
+      summary: Sample of operated limbs
+      description: |
+        Example list of possible oeprated limbs
+      value:
+        - value: Lava ruka
+          code: Left hand
+        - value: Prava ruka
+          code: Right hand
+        - value: Hlava
+          code: Head
+        - value: Brucho
+          code: Body
+        - value: Lava noha
+          code: Left leg
+        - value: Prava noha
+          code: Right leg
