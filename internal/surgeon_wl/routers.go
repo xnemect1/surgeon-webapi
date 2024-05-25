@@ -11,20 +11,25 @@
 package surgeon_wl
 
 import (
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
 )
 
 func AddRoutes(engine *gin.Engine) {
   group := engine.Group("/api")
   
   {
+    api := newSurgeonsAPI()
+    api.addRoutes(group)
+  }
+  
+  {
     api := newSurgeriesListAPI()
     api.addRoutes(group)
   }
   
-  // {
-  //   api := newSurgeryOperatedLimbAPI()
-  //   api.addRoutes(group)
-  // }
+  {
+    api := newSurgeryOperatedLimbAPI()
+    api.addRoutes(group)
+  }
   
 }

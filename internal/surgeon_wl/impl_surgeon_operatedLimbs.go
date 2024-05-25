@@ -6,7 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Nasledujúci kód je kópiou vygenerovaného a zakomentovaného kódu zo súboru api_ambulance_conditions.go
+// Nasledujúci kód je kópiou vygenerovaného a zakomentovaného kódu zo súboru api_surgeon_conditions.go
 func (this *implSurgeryOperatedLimbAPI) GetOperatedLimbs(ctx *gin.Context) {
-  ctx.AbortWithStatus(http.StatusNotImplemented)
+	limbs := []OperatedLimb{
+		{Value: "Lava ruka", Code: "Left hand"},
+		{Value: "Prava ruka", Code: "Right hand"},
+		{Value: "Lava noha", Code: "Left leg"},
+		{Value: "Prava noha", Code: "Right leg"},
+		{Value: "Hlava", Code: "Head"},
+		{Value: "Brucho", Code: "Body"},
+    }
+
+    ctx.JSON(http.StatusOK, limbs)
 }
