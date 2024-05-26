@@ -47,11 +47,11 @@ func newSurgeriesListAPI() SurgeriesListAPI {
   return &implSurgeriesListAPI{}
 }
 
-func (this *implSurgeriesListAPI) addRoutes(routerGroup *gin.RouterGroup) {
-  routerGroup.Handle( http.MethodPost, "/surgeries-list/:surgeonId/entries", this.CreateSurgeryEntry)
-  routerGroup.Handle( http.MethodDelete, "/surgeries-list/:surgeonId/entries/:entryId", this.DeleteSurgeryEntry)
-  routerGroup.Handle( http.MethodGet, "/surgeries-list/:surgeonId/entries", this.GetSurgeryEntries)
-  routerGroup.Handle( http.MethodGet, "/surgeries-list/:surgeonId/entries/:entryId", this.GetSurgeryEntry)
-  routerGroup.Handle( http.MethodPut, "/surgeries-list/:surgeonId/entries/:entryId", this.UpdateSurgeryEntry)
+func (api *implSurgeriesListAPI) addRoutes(routerGroup *gin.RouterGroup) {
+  routerGroup.Handle( http.MethodPost, "/surgeries-list/:surgeonId/entries", api.CreateSurgeryEntry)
+  routerGroup.Handle( http.MethodDelete, "/surgeries-list/:surgeonId/entries/:entryId", api.DeleteSurgeryEntry)
+  routerGroup.Handle( http.MethodGet, "/surgeries-list/:surgeonId/entries", api.GetSurgeryEntries)
+  routerGroup.Handle( http.MethodGet, "/surgeries-list/:surgeonId/entries/:entryId", api.GetSurgeryEntry)
+  routerGroup.Handle( http.MethodPut, "/surgeries-list/:surgeonId/entries/:entryId", api.UpdateSurgeryEntry)
 }
 
