@@ -7,7 +7,7 @@ import (
 )
 
 // Nasledujúci kód je kópiou vygenerovaného a zakomentovaného kódu zo súboru api_surgeon_conditions.go
-func (api *implSurgeryOperatedLimbAPI) GetOperatedLimbList(ctx *gin.Context) {
+func (api *implOperatedLimbAPI) GetOperatedLimbList(ctx *gin.Context) {
 	limbs := []OperatedLimb{
 		{Value: "Lava ruka", Code: "Left hand"},
 		{Value: "Prava ruka", Code: "Right hand"},

@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type SurgeryOperatedLimbAPI interface {
+type OperatedLimbAPI interface {
 
    // internal registration of api routes
    addRoutes(routerGroup *gin.RouterGroup)
@@ -26,25 +26,23 @@ type SurgeryOperatedLimbAPI interface {
 
  }
 
-// partial implementation of SurgeryOperatedLimbAPI - all functions must be implemented in add on files
-type implSurgeryOperatedLimbAPI struct {
+// partial implementation of OperatedLimbAPI - all functions must be implemented in add on files
+type implOperatedLimbAPI struct {
 
 }
 
-func newSurgeryOperatedLimbAPI() SurgeryOperatedLimbAPI {
-  return &implSurgeryOperatedLimbAPI{}
+func newOperatedLimbAPI() OperatedLimbAPI {
+  return &implOperatedLimbAPI{}
 }
 
-func (api *implSurgeryOperatedLimbAPI) addRoutes(routerGroup *gin.RouterGroup) {
+func (api *implOperatedLimbAPI) addRoutes(routerGroup *gin.RouterGroup) {
   routerGroup.Handle( http.MethodGet, "/surgeries-list/operatedLimbList", api.GetOperatedLimbList)
 }
 
 // Copy following section to separate file, uncomment, and implement accordingly
 // // GetOperatedLimbList - Provides the list of operated limbs associated with surgeries
-// func (api *implSurgeryOperatedLimbAPI) GetOperatedLimbList(ctx *gin.Context) {
+// func (api *implOperatedLimbAPI) GetOperatedLimbList(ctx *gin.Context) {
 //  	ctx.AbortWithStatus(http.StatusNotImplemented)
 // }
 //
-
-
 

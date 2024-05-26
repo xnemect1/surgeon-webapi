@@ -18,17 +18,17 @@ func AddRoutes(engine *gin.Engine) {
   group := engine.Group("/api")
   
   {
+    api := newOperatedLimbAPI()
+    api.addRoutes(group)
+  }
+  
+  {
     api := newSurgeonsAPI()
     api.addRoutes(group)
   }
   
   {
     api := newSurgeriesListAPI()
-    api.addRoutes(group)
-  }
-  
-  {
-    api := newSurgeryOperatedLimbAPI()
     api.addRoutes(group)
   }
   

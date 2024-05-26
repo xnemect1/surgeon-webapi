@@ -55,3 +55,30 @@ func (api *implSurgeriesListAPI) addRoutes(routerGroup *gin.RouterGroup) {
   routerGroup.Handle( http.MethodPut, "/surgeries-list/:surgeonId/entries/:entryId", api.UpdateSurgeryEntry)
 }
 
+// Copy following section to separate file, uncomment, and implement accordingly
+// // CreateSurgeryEntry - Saves new entry into surgeries list
+// func (api *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // DeleteSurgeryEntry - Deletes specific entry
+// func (api *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // GetSurgeryEntries - Provides surgeries of surgeon
+// func (api *implSurgeriesListAPI) GetSurgeryEntries(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // GetSurgeryEntry - Provides details about waiting list entry
+// func (api *implSurgeriesListAPI) GetSurgeryEntry(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+// // UpdateSurgeryEntry - Updates specific entry
+// func (api *implSurgeriesListAPI) UpdateSurgeryEntry(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+

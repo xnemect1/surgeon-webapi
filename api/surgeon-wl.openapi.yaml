@@ -4,13 +4,13 @@ servers:
     url: /api
 info:
   description: Surgeons List for Web-In-Cloud system
-  version: '1.0.0'
+  version: "1.0.0"
   title: Waiting List Api
   contact:
     email: tomas.nemec1999@gmail.com
   license:
     name: CC BY 4.0
-    url: 'https://creativecommons.org/licenses/by/4.0/'
+    url: "https://creativecommons.org/licenses/by/4.0/"
 tags:
   - name: surgeriesList
     description: Surgeries List API
@@ -19,7 +19,7 @@ tags:
   - name: surgeons
     description: Surgeons details
 paths:
-  '/surgeries-list/{surgeonId}/entries':
+  "/surgeries-list/{surgeonId}/entries":
     get:
       tags:
         - surgeriesList
@@ -34,18 +34,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: value of the surgeries list entries
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SurgeryEntry'
+                  $ref: "#/components/schemas/SurgeryEntry"
               examples:
                 response:
-                  $ref: '#/components/examples/SurgeryEntriesExample'
-        '404':
+                  $ref: "#/components/examples/SurgeryEntriesExample"
+        "404":
           description: Surgeon with such ID does not exist
     post:
       tags:
@@ -64,30 +64,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SurgeryEntry'
+              $ref: "#/components/schemas/SurgeryEntry"
             examples:
               request-sample:
-                $ref: '#/components/examples/SurgeryEntriesExample'
+                $ref: "#/components/examples/SurgeryEntriesExample"
         description: Surgery entry to store
         required: true
       responses:
-        '200':
+        "200":
           description: >-
             Value of the surgery entry
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SurgeryEntry'
+                $ref: "#/components/schemas/SurgeryEntry"
               examples:
                 updated-response:
-                  $ref: '#/components/examples/SurgeryEntriesExample'
-        '400':
+                  $ref: "#/components/examples/SurgeryEntriesExample"
+        "400":
           description: Missing mandatory properties of input object.
-        '404':
+        "404":
           description: Surgeon with such ID does not exists
-        '409':
+        "409":
           description: Entry with the specified id already exists
-  '/surgeries-list/{surgeonId}/entries/{entryId}':
+  "/surgeries-list/{surgeonId}/entries/{entryId}":
     get:
       tags:
         - surgeriesList
@@ -110,16 +110,16 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: value of the surgery list entries
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SurgeryEntry'
+                $ref: "#/components/schemas/SurgeryEntry"
               examples:
                 response:
-                  $ref: '#/components/examples/SurgeryEntryExample'
-        '404':
+                  $ref: "#/components/examples/SurgeryEntryExample"
+        "404":
           description: Surgeon or Entry with such ID does not exists
     put:
       tags:
@@ -144,29 +144,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SurgeryEntry'
+              $ref: "#/components/schemas/SurgeryEntry"
             examples:
               request:
-                $ref: '#/components/examples/SurgeryEntryExample'
+                $ref: "#/components/examples/SurgeryEntryExample"
         description: Waiting list entry to update
         required: true
       responses:
-        '200':
+        "200":
           description: >-
             value of the surgeries list entry with re-computed estimated time of
             surgeon entry
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SurgeryEntry'
+                $ref: "#/components/schemas/SurgeryEntry"
               examples:
                 response:
-                  $ref: '#/components/examples/SurgeryEntryExample'
-        '403':
+                  $ref: "#/components/examples/SurgeryEntryExample"
+        "403":
           description: >-
             Value of the entryID and the data id is mismatching. Details are
             provided in the response body.
-        '404':
+        "404":
           description: Surgeon or Entry with such ID does not exists
     delete:
       tags:
@@ -188,30 +188,30 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: Item deleted
-        '404':
+        "404":
           description: Surgeon or Entry with such ID does not exists
-  '/surgeries-list/operatedLimbList':
+  "/surgeries-list/operatedLimbList":
     get:
       tags:
-        - surgeryOperatedLimb
+        - OperatedLimb
       summary: Provides the list of operated limbs associated with surgeries
       operationId: getOperatedLimbList
       description: Get a list of predefined operated limbs applicable to surgeries
       responses:
-        '200':
+        "200":
           description: value of the predefined operated limbs
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OperatedLimb'
+                  $ref: "#/components/schemas/OperatedLimb"
               examples:
                 response:
-                  $ref: '#/components/examples/OperatedLimbsListExample'
-  '/surgeon':
+                  $ref: "#/components/examples/OperatedLimbsListExample"
+  "/surgeon":
     post:
       tags:
         - surgeons
@@ -222,26 +222,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Surgeon'
+              $ref: "#/components/schemas/Surgeon"
             examples:
               request-sample:
-                $ref: '#/components/examples/SurgeonExample'
+                $ref: "#/components/examples/SurgeonExample"
         description: surgeon details to store
         required: true
       responses:
-        '200':
+        "200":
           description: >-
             Value of stored surgeon
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Surgeon'
+                $ref: "#/components/schemas/Surgeon"
               examples:
                 updated-response:
-                  $ref: '#/components/examples/SurgeonExample'
-        '400':
+                  $ref: "#/components/examples/SurgeonExample"
+        "400":
           description: Missing mandatory properties of input object.
-        '409':
+        "409":
           description: Entry with the specified id already exists
     get:
       tags:
@@ -250,20 +250,20 @@ paths:
       operationId: getAllSurgeons
       description: Use this method to get a list of all surgeons registered in the system
       responses:
-        '200':
+        "200":
           description: A list of surgeons
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Surgeon'
+                  $ref: "#/components/schemas/Surgeon"
               examples:
                 surgeon-list:
-                  $ref: '#/components/examples/SurgeonListExample'
-        '500':
+                  $ref: "#/components/examples/SurgeonListExample"
+        "500":
           description: Server error
-  '/surgeon/{surgeonId}':
+  "/surgeon/{surgeonId}":
     delete:
       tags:
         - surgeons
@@ -278,9 +278,9 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: Item deleted
-        '404':
+        "404":
           description: Surgeon with such ID does not exist
 components:
   schemas:
@@ -307,11 +307,11 @@ components:
           type: string
           example: Surgery was successful without any complication
         operatedLimb:
-          $ref: '#/components/schemas/OperatedLimb'
+          $ref: "#/components/schemas/OperatedLimb"
       example:
-        $ref: '#/components/examples/SurgeryEntryExample'
+        $ref: "#/components/examples/SurgeryEntryExample"
     OperatedLimb:
-      description: 'Location on body that was operated'
+      description: "Location on body that was operated"
       required:
         - value
       properties:
@@ -322,10 +322,10 @@ components:
           type: string
           example: Left hand
       example:
-        $ref: '#/components/examples/OperatedLimbExample'
+        $ref: "#/components/examples/OperatedLimbExample"
     Surgeon:
       type: object
-      required: ['id', 'name']
+      required: ["id", "name"]
       properties:
         id:
           type: string
@@ -339,9 +339,9 @@ components:
           type: array
           description: List of surgeries performed by the surgeon
           items:
-            $ref: '#/components/schemas/SurgeryEntry'
+            $ref: "#/components/schemas/SurgeryEntry"
       example:
-        $ref: '#/components/examples/SurgeonExample'
+        $ref: "#/components/examples/SurgeonExample"
   examples:
     SurgeryEntryExample:
       summary: Ľudomír Zlostný waiting
