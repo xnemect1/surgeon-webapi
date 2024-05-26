@@ -148,7 +148,7 @@ func (api *implSurgeriesListAPI) UpdateSurgeryEntry(ctx *gin.Context) {
         if entryId == "" {
             return nil, gin.H{
                 "status":  http.StatusBadRequest,
-                "message": "Entry ID is required",
+                "message": "Entry ID is really required",
             }, http.StatusBadRequest
         }
 
