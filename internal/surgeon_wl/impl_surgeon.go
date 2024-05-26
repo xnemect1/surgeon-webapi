@@ -9,8 +9,8 @@ import (
 )
 
 // Kópia zakomentovanej časti z api_ambulances.go
-// CreateAmbulance - Saves new ambulance definition
-func (this *implSurgeonsAPI) CreateSurgeon(ctx *gin.Context) {
+// CreateSurgeon - Saves new ambulance definition
+func (api *implSurgeonsAPI) CreateSurgeon(ctx *gin.Context) {
 	value, exists := ctx.Get("db_service")
 	if !exists {
 		ctx.JSON(
@@ -82,7 +82,7 @@ func (this *implSurgeonsAPI) CreateSurgeon(ctx *gin.Context) {
 }
 
 // DeleteAmbulance - Deletes specific ambulance
-func (this *implSurgeonsAPI) DeleteSurgeon(ctx *gin.Context) {
+func (api *implSurgeonsAPI) DeleteSurgeon(ctx *gin.Context) {
 	value, exists := ctx.Get("db_service")
 	if !exists {
 		ctx.JSON(
@@ -131,4 +131,42 @@ func (this *implSurgeonsAPI) DeleteSurgeon(ctx *gin.Context) {
 				"error":   err.Error(),
 			})
 	}
+}
+
+// GetAllSurgeons handles GET requests and retrieves all surgeons
+func (api *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
+	value, exists := ctx.Get("db_service")
+	if !exists {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "Internal Server Error",
+			"message": "db_service not found",
+			"error":   "db_service not found",
+		})
+		return
+	}
+
+	db, ok := value.(db_service.DbService[Surgeon])
+	if !ok {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "Internal Server Error",
+			"message": "db_service context is not of type db_service.DbService",
+			"error":   "cannot cast db_service context to db_service.DbService",
+		})
+		return
+	}
+
+	surgeons, err := db.GetAllDocuments(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "Internal Server Error",
+			"message": "Failed to retrieve surgeons",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status":   "Success",
+		"surgeons": surgeons,
+	})
 }

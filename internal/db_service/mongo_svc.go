@@ -19,6 +19,7 @@ type DbService[DocType interface{}] interface {
     CreateDocument(ctx context.Context, id string, document *DocType) error
     FindDocument(ctx context.Context, id string) (*DocType, error)
     UpdateDocument(ctx context.Context, id string, document *DocType) error
+	GetAllDocuments(ctx context.Context) ([]*DocType, error)
     DeleteDocument(ctx context.Context, id string) error
     Disconnect(ctx context.Context) error
 }
@@ -243,3 +244,83 @@ func (this *mongoSvc[DocType]) DeleteDocument(ctx context.Context, id string) er
     _, err = collection.DeleteOne(ctx, bson.D{{Key: "id", Value: id}})
     return err
 }
+
+func (this *mongoSvc[DocType]) GetAllDocuments(ctx context.Context) ([]*DocType, error) {
+    ctx, cancel := context.WithTimeout(ctx, this.Timeout)
+    defer cancel()
+
+    client, err := this.connect(ctx)
+    if err != nil {
+        return nil, err
+    }
+
+    db := client.Database(this.DbName)
+    collection := db.Collection(this.Collection)
+
+    cursor, err := collection.Find(ctx, bson.D{}) // Find all documents
+    if err != nil {
+        return nil, err
+    }
+    defer cursor.Close(ctx)
+
+    var documents []*DocType
+    if err = cursor.All(ctx, &documents); err != nil {
+        return nil, err
+    }
+
+    return documents, nil
+}
+
+// SEEDER
+type Surgeon struct {
+	Id   string `bson:"id" json:"id"`
+	Name string `bson:"name" json:"name"`
+}
+
+type SurgeryEntry struct {
+	Id           string       `bson:"id" json:"id"`
+	SurgeonId    string       `bson:"surgeonId" json:"surgeonId"`
+	PatientId    string       `bson:"patientId" json:"patientId"`
+	Date         string       `bson:"date" json:"date"`
+	Successful   bool         `bson:"successful" json:"successful"`
+	SurgeryNote  string       `bson:"surgeryNote,omitempty" json:"surgeryNote,omitempty"`
+	OperatedLimb OperatedLimb `bson:"operatedLimb" json:"operatedLimb"`
+}
+
+type OperatedLimb struct {
+	Value string `bson:"value" json:"value"`
+	Code  string `bson:"code" json:"code"`
+}
+
+func (svc *mongoSvc[DocType]) SeedDatabase(ctx context.Context) error {
+    db := svc.client.Load().Database(svc.DbName)
+
+    surgeonsCollection := db.Collection("surgeons")
+    surgeriesCollection := db.Collection("surgeries")
+
+    surgeons := []interface{}{
+        Surgeon{Id: "1", Name: "MuDr. Andrej Poljak"},
+        Surgeon{Id: "2", Name: "MuDr. Jan Vrba"},
+    }
+
+    surgeries := []interface{}{
+        SurgeryEntry{Id: "s1", SurgeonId: "1", PatientId: "p1", Date: "2024-01-01", Successful: true, SurgeryNote: "Vyber znamienka", OperatedLimb: OperatedLimb{Value: "Lava ruka", Code: "Left hand"}},
+        SurgeryEntry{Id: "s2", SurgeonId: "1", PatientId: "p2", Date: "2024-01-02", Successful: false, SurgeryNote: "Vymena kolenneho klbu", OperatedLimb: OperatedLimb{Value: "Prava noha", Code: "Right leg"}},
+        SurgeryEntry{Id: "s3", SurgeonId: "2", PatientId: "p3", Date: "2024-01-03", Successful: true, SurgeryNote: "Amputacia ruky", OperatedLimb: OperatedLimb{Value: "Prava ruka", Code: "Right hand"}},
+        SurgeryEntry{Id: "s4", SurgeonId: "2", PatientId: "p4", Date: "2024-01-04", Successful: false, SurgeryNote: "Vymena ACL", OperatedLimb: OperatedLimb{Value: "Lava noha", Code: "Left leg"}},
+    }
+
+    if _, err := surgeonsCollection.InsertMany(ctx, surgeons); err != nil {
+        log.Printf("Failed to insert surgeons: %v", err)
+        return err
+    }
+
+    if _, err := surgeriesCollection.InsertMany(ctx, surgeries); err != nil {
+        log.Printf("Failed to insert surgeries: %v", err)
+        return err
+    }
+
+    return nil
+}
+
+

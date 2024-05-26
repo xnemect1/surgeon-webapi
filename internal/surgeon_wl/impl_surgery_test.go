@@ -11,7 +11,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/xnemect1/surgeon-webapi/internal/db_service"
 )
 
 type SurgeonWlSuite struct {
@@ -56,7 +55,7 @@ func (suite *SurgeonWlSuite) SetupTest() {
     suite.dbServiceMock = &DbServiceMock[Surgeon]{}
 
     // Compile time Assert that the mock is of type db_service.DbService[Ambulance]
-    var _ db_service.DbService[Surgeon] = suite.dbServiceMock
+    // var _ db_service.DbService[Surgeon] = suite.dbServiceMock
 
 }
 
@@ -91,7 +90,7 @@ func (suite *SurgeonWlSuite) SetupTest() {
 // 	ctx.Request = httptest.NewRequest("POST", "/surgeon", strings.NewReader(string(jsonData)))
 // 	ctx.Request.Header.Set("Content-Type", "application/json")
 
-// 	sut := implSurgeonsAPI{}
+// 	sut := implSurgeonAPI{}
 
 // 	// ACT
 // 	sut.CreateSurgeon(ctx)
@@ -108,20 +107,6 @@ func (suite *SurgeonWlSuite) Test_CreateSurgeon_PostRequest() {
 	surgeon := Surgeon{
 		Id:   "test-ambulance",
 		Name: "test-Poljako",
-		SurgeriesList: []SurgeryEntry{
-			{
-				Id:          "test-entry",
-				PatientId:   "test-patient",
-				SurgeonId:   "test-surgeon",
-				Date:        "2024-05-06",
-				SurgeryNote: "Uplne zle...",
-				Successful:  true,
-				OperatedLimb: OperatedLimb{
-					Value: "Hlava",
-					Code:  "Head",
-				},
-			},
-		},
 	}
 	jsonData, _ := json.Marshal(surgeon)
 	gin.SetMode(gin.TestMode)

@@ -18,16 +18,19 @@ import (
 
 type SurgeonsAPI interface {
 
-   // internal registration of api routes
-   addRoutes(routerGroup *gin.RouterGroup)
+  // internal registration of api routes
+  addRoutes(routerGroup *gin.RouterGroup)
 
-    // CreateSurgeon - Saves new surgeon
-   CreateSurgeon(ctx *gin.Context)
+   // CreateSurgeon - Saves new surgeon
+  CreateSurgeon(ctx *gin.Context)
 
-    // DeleteSurgeon - Deletes specific surgeon
-   DeleteSurgeon(ctx *gin.Context)
+   // DeleteSurgeon - Deletes specific surgeon
+  DeleteSurgeon(ctx *gin.Context)
 
- }
+   // GetAllSurgeons - Retrieves all surgeons
+  GetAllSurgeons(ctx *gin.Context)
+
+}
 
 // partial implementation of SurgeonsAPI - all functions must be implemented in add on files
 type implSurgeonsAPI struct {
@@ -35,12 +38,13 @@ type implSurgeonsAPI struct {
 }
 
 func newSurgeonsAPI() SurgeonsAPI {
-  return &implSurgeonsAPI{}
+ return &implSurgeonsAPI{}
 }
 
 func (this *implSurgeonsAPI) addRoutes(routerGroup *gin.RouterGroup) {
-  routerGroup.Handle( http.MethodPost, "/surgeon", this.CreateSurgeon)
-  routerGroup.Handle( http.MethodDelete, "/surgeon/:surgeonId", this.DeleteSurgeon)
+ routerGroup.Handle( http.MethodPost, "/surgeon", this.CreateSurgeon)
+ routerGroup.Handle( http.MethodDelete, "/surgeon/:surgeonId", this.DeleteSurgeon)
+ routerGroup.Handle( http.MethodGet, "/surgeon", this.GetAllSurgeons)
 }
 
 // Copy following section to separate file, uncomment, and implement accordingly
@@ -54,4 +58,8 @@ func (this *implSurgeonsAPI) addRoutes(routerGroup *gin.RouterGroup) {
 //  	ctx.AbortWithStatus(http.StatusNotImplemented)
 // }
 //
-
+// // GetAllSurgeons - Retrieves all surgeons
+// func (this *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//

@@ -15,9 +15,6 @@ type SurgeryEntry struct {
 	// Unique id of the entry in this surgeries list
 	Id string `json:"id"`
 
-	// Unique identifier of the surgeon known to Web-In-Cloud system
-	SurgeonId string `json:"surgeonId"`
-
 	// Unique identifier of the patient known to Web-In-Cloud system
 	PatientId string `json:"patientId"`
 

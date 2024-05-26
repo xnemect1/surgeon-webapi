@@ -35,7 +35,7 @@ func (this *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
             entry.Id = uuid.NewString()
         }
 
-        conflictIndx := slices.IndexFunc( surgeon.SurgeriesList, func(waiting SurgeryEntry) bool {
+        conflictIndx := slices.IndexFunc( surgeon.Surgeries, func(waiting SurgeryEntry) bool {
             return entry.Id == waiting.Id || entry.PatientId == waiting.PatientId
         })
 
@@ -46,10 +46,10 @@ func (this *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
             }, http.StatusConflict
         }
 
-        surgeon.SurgeriesList = append(surgeon.SurgeriesList, entry)
+        surgeon.Surgeries = append(surgeon.Surgeries, entry)
         
         // entry was copied by value return reconciled value from the list
-        entryIndx := slices.IndexFunc( surgeon.SurgeriesList, func(waiting SurgeryEntry) bool {
+        entryIndx := slices.IndexFunc( surgeon.Surgeries, func(waiting SurgeryEntry) bool {
             return entry.Id == waiting.Id
         })
         if entryIndx < 0 {
@@ -58,7 +58,7 @@ func (this *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
                 "message": "Failed to save entry",
             }, http.StatusInternalServerError
         }
-        return surgeon, surgeon.SurgeriesList[entryIndx], http.StatusOK
+        return surgeon, surgeon.Surgeries[entryIndx], http.StatusOK
     })
 }
 
@@ -74,7 +74,7 @@ func (this *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
             }, http.StatusBadRequest
         }
 
-        entryIndx := slices.IndexFunc(surgeon.SurgeriesList, func(waiting SurgeryEntry) bool {
+        entryIndx := slices.IndexFunc(surgeon.Surgeries, func(waiting SurgeryEntry) bool {
             return entryId == waiting.Id
         })
 
@@ -85,7 +85,7 @@ func (this *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
             }, http.StatusNotFound
         }
 
-        surgeon.SurgeriesList = append(surgeon.SurgeriesList[:entryIndx], surgeon.SurgeriesList[entryIndx+1:]...)
+        surgeon.Surgeries = append(surgeon.Surgeries[:entryIndx], surgeon.Surgeries[entryIndx+1:]...)
         return surgeon, nil, http.StatusNoContent
     })
 }
@@ -93,7 +93,7 @@ func (this *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
 // GetSurgeryEntries - Provides the surgeries list
 func (this *implSurgeriesListAPI) GetSurgeryEntries(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
-        result := surgeon.SurgeriesList
+        result := surgeon.Surgeries
         if result == nil {
             result = []SurgeryEntry{}
         }
@@ -114,7 +114,7 @@ func (this *implSurgeriesListAPI) GetSurgeryEntry(ctx *gin.Context) {
             }, http.StatusBadRequest
         }
 
-        entryIndx := slices.IndexFunc(surgeon.SurgeriesList, func(waiting SurgeryEntry) bool {
+        entryIndx := slices.IndexFunc(surgeon.Surgeries, func(waiting SurgeryEntry) bool {
             return entryId == waiting.Id
         })
 
@@ -126,7 +126,7 @@ func (this *implSurgeriesListAPI) GetSurgeryEntry(ctx *gin.Context) {
         }
 
         // return nil surgeon - no need to update it in db
-        return nil, surgeon.SurgeriesList[entryIndx], http.StatusOK
+        return nil, surgeon.Surgeries[entryIndx], http.StatusOK
     })
 }
 
@@ -152,7 +152,7 @@ func (this *implSurgeriesListAPI) UpdateSurgeryEntry(ctx *gin.Context) {
             }, http.StatusBadRequest
         }
 
-        entryIndx := slices.IndexFunc(surgeon.SurgeriesList, func(waiting SurgeryEntry) bool {
+        entryIndx := slices.IndexFunc(surgeon.Surgeries, func(waiting SurgeryEntry) bool {
             return entryId == waiting.Id
         })
 
@@ -164,32 +164,24 @@ func (this *implSurgeriesListAPI) UpdateSurgeryEntry(ctx *gin.Context) {
         }
 
         if entry.PatientId != "" {
-            surgeon.SurgeriesList[entryIndx].PatientId = entry.PatientId
-        }
-
-		if entry.SurgeonId != "" {
-            surgeon.SurgeriesList[entryIndx].SurgeonId = entry.SurgeonId
+            surgeon.Surgeries[entryIndx].PatientId = entry.PatientId
         }
 
         if entry.Id != "" {
-            surgeon.SurgeriesList[entryIndx].Id = entry.Id
-        }
-
-		if entry.Id != "" {
-            surgeon.SurgeriesList[entryIndx].Id = entry.Id
+            surgeon.Surgeries[entryIndx].Id = entry.Id
         }
 
 		if entry.Date != "" {
-            surgeon.SurgeriesList[entryIndx].Date = entry.Date
+            surgeon.Surgeries[entryIndx].Date = entry.Date
         }
 
 		if entry.SurgeryNote != "" {
-            surgeon.SurgeriesList[entryIndx].SurgeryNote = entry.SurgeryNote
+            surgeon.Surgeries[entryIndx].SurgeryNote = entry.SurgeryNote
         }
 
         
 
         
-        return surgeon, surgeon.SurgeriesList[entryIndx], http.StatusOK
+        return surgeon, surgeon.Surgeries[entryIndx], http.StatusOK
     })
 }

@@ -18,5 +18,6 @@ type Surgeon struct {
 	// Human readable name of the surgeon
 	Name string `json:"name"`
 
-	SurgeriesList []SurgeryEntry `json:"surgeriesList,omitempty"`
+	// List of surgeries performed by the surgeon
+	Surgeries []SurgeryEntry `json:"surgeries,omitempty"`
 }

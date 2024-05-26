@@ -40,6 +40,8 @@ func main() {
     // setup context update  middleware
     dbService := db_service.NewMongoService[surgeon_wl.Surgeon](db_service.MongoServiceConfig{})
     defer dbService.Disconnect(context.Background())
+
+    
     engine.Use(func(ctx *gin.Context) {
         ctx.Set("db_service", dbService)
         ctx.Next()
@@ -49,4 +51,5 @@ func main() {
     surgeon_wl.AddRoutes(engine)
     engine.GET("/openapi", api.HandleOpenApi)
     engine.Run(":" + port)
+    
 }
