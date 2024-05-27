@@ -48,27 +48,53 @@ db[collection].createIndex({ id: 1 });
 //insert sample data
 let result = db[collection].insertMany([
   {
-    Id: "doc1",
+    Id: "1",
     Name: "MuDr. Andrej Poljako",
     SurgeriesList: [
       {
-        Id: "surg1",
-        PatientId: "pat1",
-        SurgeonId: "doc1",
+        Id: "1",
+        PatientId: "123-pat1",
         Date: "2024-05-06",
         SurgeryNote: "Uplne vsetko v poriadku.",
         Successful: true,
+        OperatedLimb: {
+          Value: "Prava ruka",
+          Code: "Right hand",
+        },
+      },
+      {
+        Id: "2",
+        PatientId: "123-pat2",
+        Date: "2024-01-01",
+        SurgeryNote: "Zle dopadla operacia, nema oko.",
+        Successful: false,
         OperatedLimb: {
           Value: "Hlava",
           Code: "Head",
         },
       },
+    ],
+  },
+  {
+    Id: "2",
+    Name: "MuDr. Hipko",
+    SurgeriesList: [
       {
-        Id: "surg2",
-        PatientId: "pat2",
-        SurgeonId: "doc1",
+        Id: "3",
+        PatientId: "876-pat3",
+        Date: "2024-05-06",
+        SurgeryNote: "Prebehlo bez problemov.",
+        Successful: true,
+        OperatedLimb: {
+          Value: "Lava noha",
+          Code: "Left leg",
+        },
+      },
+      {
+        Id: "4",
+        PatientId: "123-pat1",
         Date: "2024-01-01",
-        SurgeryNote: "Zle dopadla operacia, nema oko.",
+        SurgeryNote: "Odlupila sa cast mozgu.",
         Successful: false,
         OperatedLimb: {
           Value: "Hlava",
