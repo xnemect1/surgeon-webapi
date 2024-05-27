@@ -50,7 +50,7 @@ let result = db[collection].insertMany([
   {
     Id: "1",
     Name: "MuDr. Andrej Poljako",
-    SurgeriesList: [
+    Surgeries: [
       {
         Id: "1",
         PatientId: "123-pat1",
@@ -78,7 +78,7 @@ let result = db[collection].insertMany([
   {
     Id: "2",
     Name: "MuDr. Hipko",
-    SurgeriesList: [
+    Surgeries: [
       {
         Id: "3",
         PatientId: "876-pat3",

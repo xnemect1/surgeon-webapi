@@ -1,6 +1,7 @@
 package surgeon_wl
 
 import (
+	"fmt"
 	"net/http"
 
 	"slices"
@@ -93,6 +94,7 @@ func (api *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
 // GetSurgeryEntries - Provides the surgeries list
 func (api *implSurgeriesListAPI) GetSurgeryEntries(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
+        fmt.Println("FUNCTION getSurgery called")
         result := surgeon.Surgeries
         if result == nil {
             result = []SurgeryEntry{}

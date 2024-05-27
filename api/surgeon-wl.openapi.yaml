@@ -411,7 +411,7 @@ components:
       value:
         id: xpoljako
         name: Mudr. Andrej Poljak
-        surgeriesList:
+        surgeries:
           - id: x321ab3
             patientId: 74895-ludomir-zlostny
             date: 2024-05-24
@@ -435,7 +435,7 @@ components:
       value:
         - id: 1
           name: Mudr. Andrej Poljak
-          surgeriesList:
+          surgeries:
             - id: 1
               patientId: 74895-ludomir-zlostny
               date: 2024-05-24
@@ -454,7 +454,7 @@ components:
                 code: Right leg
         - id: 2
           name: Mudr. Hipko
-          surgeriesList:
+          surgeries:
             - id: 3
               patientId: 74895-ludomir-zlostny
               date: 2024-05-24
