@@ -134,7 +134,7 @@ func (api *implSurgeonsAPI) DeleteSurgeon(ctx *gin.Context) {
 }
 
 // GetAllSurgeons handles GET requests and retrieves all surgeons
-func (api *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
+func (this *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
 	value, exists := ctx.Get("db_service")
 	if !exists {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -165,8 +165,5 @@ func (api *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"status":   "Success",
-		"surgeons": surgeons,
-	})
+	ctx.JSON(http.StatusOK, surgeons,)
 }
