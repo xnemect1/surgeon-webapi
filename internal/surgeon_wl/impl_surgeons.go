@@ -1,6 +1,7 @@
 package surgeon_wl
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -135,6 +136,7 @@ func (api *implSurgeonsAPI) DeleteSurgeon(ctx *gin.Context) {
 
 // GetAllSurgeons handles GET requests and retrieves all surgeons
 func (this *implSurgeonsAPI) GetAllSurgeons(ctx *gin.Context) {
+	fmt.Println("Function get all surgeons called")
 	value, exists := ctx.Get("db_service")
 	if !exists {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

@@ -28,7 +28,7 @@ func AddRoutes(engine *gin.Engine) {
   }
   
   {
-    api := newSurgeriesListAPI()
+    api := newSurgeriesAPI()
     api.addRoutes(group)
   }
   

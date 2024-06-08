@@ -12,7 +12,7 @@ info:
     name: CC BY 4.0
     url: "https://creativecommons.org/licenses/by/4.0/"
 tags:
-  - name: surgeriesList
+  - name: surgeries
     description: Surgeries List API
   - name: oepratedLimbs
     description: specific locations that can be operated
@@ -22,7 +22,7 @@ paths:
   "/surgeries-list/{surgeonId}/entries":
     get:
       tags:
-        - surgeriesList
+        - surgeries
       summary: Provides surgeries of surgeon
       operationId: getSurgeryEntries
       description: By using surgeonId you get list of surgeries performed by surgeon
@@ -49,7 +49,7 @@ paths:
           description: Surgeon with such ID does not exist
     post:
       tags:
-        - surgeriesList
+        - surgeries
       summary: Saves new entry into surgeries list
       operationId: createSurgeryEntry
       description: Use this method to store new entry into the surgeries list.
@@ -90,7 +90,7 @@ paths:
   "/surgeries-list/{surgeonId}/entries/{entryId}":
     get:
       tags:
-        - surgeriesList
+        - surgeries
       summary: Provides details about waiting list entry
       operationId: getSurgeryEntry
       description: >-
@@ -123,7 +123,7 @@ paths:
           description: Surgeon or Entry with such ID does not exists
     put:
       tags:
-        - surgeriesList
+        - surgeries
       summary: Updates specific entry
       operationId: updateSurgeryEntry
       description: Use this method to update content of the waiting list entry.
@@ -170,7 +170,7 @@ paths:
           description: Surgeon or Entry with such ID does not exists
     delete:
       tags:
-        - surgeriesList
+        - surgeries
       summary: Deletes specific entry
       operationId: deleteSurgeryEntry
       description: Use this method to delete the specific entry from the surgeries list.

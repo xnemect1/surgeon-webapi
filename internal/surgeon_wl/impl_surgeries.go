@@ -13,7 +13,7 @@ import (
 // Nasledujúci kód je kópiou vygenerovaného a zakomentovaného kódu zo súboru api_surgeon_waiting_list.go
 
 // CreateSurgeryEntry - Saves new entry into waiting list
-func (api *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
+func (api *implSurgeriesAPI) CreateSurgeryEntry(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon,  interface{},  int){
         var entry SurgeryEntry
 
@@ -64,7 +64,7 @@ func (api *implSurgeriesListAPI) CreateSurgeryEntry(ctx *gin.Context) {
 }
 
 // DeleteSurgeryEntry - Deletes specific entry
-func (api *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
+func (api *implSurgeriesAPI) DeleteSurgeryEntry(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
         entryId := ctx.Param("entryId")
 
@@ -92,7 +92,7 @@ func (api *implSurgeriesListAPI) DeleteSurgeryEntry(ctx *gin.Context) {
 }
 
 // GetSurgeryEntries - Provides the surgeries list
-func (api *implSurgeriesListAPI) GetSurgeryEntries(ctx *gin.Context) {
+func (api *implSurgeriesAPI) GetSurgeryEntries(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
         fmt.Println("FUNCTION getSurgery called")
         result := surgeon.Surgeries
@@ -105,7 +105,7 @@ func (api *implSurgeriesListAPI) GetSurgeryEntries(ctx *gin.Context) {
 }
 
 // GetSurgeryEntry - Provides details about surgery entry
-func (api *implSurgeriesListAPI) GetSurgeryEntry(ctx *gin.Context) {
+func (api *implSurgeriesAPI) GetSurgeryEntry(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
         entryId := ctx.Param("entryId")
 
@@ -133,7 +133,7 @@ func (api *implSurgeriesListAPI) GetSurgeryEntry(ctx *gin.Context) {
 }
 
 // UpdateSurgeryEntry - Updates specific entry
-func (api *implSurgeriesListAPI) UpdateSurgeryEntry(ctx *gin.Context) {
+func (api *implSurgeriesAPI) UpdateSurgeryEntry(ctx *gin.Context) {
 	updateSurgeonFunc(ctx, func(c *gin.Context, surgeon *Surgeon) (*Surgeon, interface{}, int) {
         var entry SurgeryEntry
 
