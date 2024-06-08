@@ -55,7 +55,7 @@ spec:
               memory: "256Mi"
               cpu: "0.1"
       containers:
-        - name: xnemect-surgeon-wl-webapi-container
+        - name: xnemect-surgeon-webapi-container
           image: xnemect/surgeon-wl-webapi:latest
           imagePullPolicy: Always
           ports:

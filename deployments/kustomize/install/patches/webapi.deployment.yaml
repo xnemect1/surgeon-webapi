@@ -33,7 +33,7 @@ spec:
                   name: mongodb-auth
                   key: password
       containers:
-        - name: xnemect-surgeon-wl-webapi-container
+        - name: xnemect-surgeon-webapi-container
           env:
             - name: SURGEON_API_MONGODB_HOST
               value: null
